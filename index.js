@@ -28,6 +28,7 @@ client.on("message", (message) => {
         } else if (cmd === "cr") {
             // message.delete({ timeout: 0 }).catch(console.error);
             // message.channel.send(`<@${message.member.user.id}>`);
+            // meem
             if (msg.length > 2 && msg[msg.length - 1].startsWith("<@")) {
                 message.channel.send(msg[msg.length - 1]).catch(console.error);
                 msg.pop();
