@@ -25,7 +25,7 @@ client.on("message", (message) => {
         } else if (cmd === "purpose") {
             message.channel.send({ file: "https://i.imgur.com/vfhXDJh.jpg" });
             // png is https://i.imgur.com/NNeBrXZ.png
-        } else if (cmd == "cr") {
+        } else if (cmd === "cr") {
             // message.delete({ timeout: 0 }).catch(console.error);
             // message.channel.send(`<@${message.member.user.id}>`);
             if (msg.length > 2 && msg[msg.length - 1].startsWith("<@")) {
@@ -56,6 +56,8 @@ client.on("message", (message) => {
                         )
                 )
                 .catch(console.error);
+        } else if (cmd === "test") {
+            message.channel.send({ files: ["./images/jihoon.png"] });
         }
         // else if (cmd === '!PURPOSELOCAL'){
         //     message.channel.send({files: ['./images/purpose.png'] });
@@ -65,23 +67,26 @@ client.on("message", (message) => {
         } else if (cmd === "wry") {
             message.channel.send("https://www.youtube.com/watch?v=0fLNL0kNzUM");
         }
-    } else if (cmd === "NICE") {
-        message.channel.send("nice");
-    } else if (message.content.includes("nice")) {
-        message.channel.send("did someone just say");
-        message.channel.send("_ _");
-        message.channel.send("nice");
-    } else if (cmd.startsWith("REE")) {
-        ree = client.emojis.find((emoji) => emoji.name === "ree");
-        if (ree) {
-            message.channel.send(ree.toString());
-        } else {
-            message.channel.send("ree");
+    } else {
+        cmd = message.content.toLowerCase();
+        if (cmd === "nice") {
+            message.channel.send("nice");
+        } else if (message.content.includes("nice")) {
+            message.channel.send("did someone just say");
+            message.channel.send("_ _");
+            message.channel.send("nice");
+        } else if (cmd.startsWith("ree")) {
+            ree = client.emojis.find((emoji) => emoji.name === "ree");
+            if (ree) {
+                message.channel.send(ree.toString());
+            } else {
+                message.channel.send("ree");
+            }
+        } else if (cmd === "bad bot") {
+            message.channel.send("sorry");
+        } else if (cmd === "good bot") {
+            message.channel.send("thank");
         }
-    } else if (cmd === "bad bot") {
-        message.channel.send("sorry");
-    } else if (cmd === "good bot") {
-        message.channel.send("thank");
     }
 });
 
