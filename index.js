@@ -26,22 +26,32 @@ client.on("message", (message) => {
             message.channel.send({ file: "https://i.imgur.com/vfhXDJh.jpg" });
             // png is https://i.imgur.com/NNeBrXZ.png
         } else if (cmd == "cr") {
-            message.delete({ timeout: 0 }).catch(console.error);
+            // message.delete({ timeout: 0 }).catch(console.error);
             // message.channel.send(`<@${message.member.user.id}>`);
-            if (msg.length >= 2) {
-                message.channel.send(msg[2]).catch(console.error);
+            if (msg.length > 2 && msg[msg.length - 1].startsWith("<@")) {
+                message.channel.send(msg[msg.length - 1]).catch(console.error);
+                msg.pop();
             }
             message.channel
                 .send(
-                    msg[1]
+                    msg
+                        .splice(2)
+                        .reduce((acc, cur) => acc + " " + cur, msg[1])
                         .toLowerCase()
                         .split("")
                         .reduce(
                             (acc, cur) =>
                                 acc +
                                 ("a" <= cur && cur <= "z"
-                                    ? `:regional_indicator_${cur}: `
-                                    : ""),
+                                    ? `:regional_indicator_${cur}:`
+                                    : cur === "?"
+                                    ? ":question:"
+                                    : cur === " "
+                                    ? "\t"
+                                    : cur === "!"
+                                    ? ":exclamation:"
+                                    : "") +
+                                " ",
                             ""
                         )
                 )
