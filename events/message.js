@@ -4,7 +4,7 @@ const fs = require("fs");
 function dofile(i) {
     fs.readFile("counts.txt", function (err, data) {
         data = data.toString().split("\n");
-        console.log(data);
+        // console.log(data);
         data[i] = parseInt(data[i]);
         data[i]++;
         fs.writeFile(
@@ -41,7 +41,7 @@ module.exports = (client, message) => {
     } else if (message.content.includes("nice")) {
         message.channel.send(
             `did someone just say
-_ _
+
 nice`
         );
     } else if (message.content.indexOf(client.config.prefix) !== 0) return;
@@ -54,11 +54,9 @@ nice`
         const command = args.shift().toLowerCase();
         // Grab the command data from the client.commands Enmap
         const cmd = client.commands.get(command);
-
         // If that command doesn't exist, silently exit and do nothing
         if (!cmd) return;
-
         // Run the command
-        cmd.run(client, message, args);
+        cmd.run(cmd, client, message, args);
     }
 };

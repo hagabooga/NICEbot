@@ -1,13 +1,13 @@
-const Discord = require("discord.js");
-/**
- * @param {Discord.Client} client The discord client
- * @param {Discord.Message} message The message
- * @param {Array<string>} args The string
- */
+const Command = require("../util/command").Command;
 
-exports.run = (client, message, args) => {
-    message.channel
-        .send("👀")
-        .then((x) => x.react("👀"))
-        .catch(console.error);
-};
+exports.command = new Command(
+    "icit",
+    "I see it",
+    "icit",
+    (self, client, message, args) => {
+        message.channel
+            .send("👀")
+            .then((x) => x.react("👀"))
+            .catch(console.error);
+    }
+);
