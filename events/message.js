@@ -34,6 +34,12 @@ module.exports = (client, message) => {
     } else if (message.content.toLowerCase().trim() === "bad bot") {
         message.channel.send("sorry");
         dofile(1);
+    } else if (message.content.toLowerCase().trim() === "shit bot") {
+        message.channel.send("oof");
+        for (let i = 0; i < 5; i++) dofile(1);
+    } else if (message.content.toLowerCase().trim() === "god bot") {
+        message.channel.send("😍");
+        dofile(0);
     } else if (message.content.toLowerCase().trim().startsWith("ree")) {
         message.react("560636518495027200");
     } else if (message.content.toLowerCase().trim() === "nice") {

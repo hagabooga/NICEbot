@@ -40,6 +40,7 @@ fs.readdir("./commands/", (err, files) => {
     if (err) return console.error(err);
     files.forEach((file) => {
         if (!file.endsWith(".js")) return;
+        // console.log(file);
         let command_file = require(`./commands/${file}`);
         let commandName = file.split(".")[0];
         // console.log(`Loading command: ${commandName}`);

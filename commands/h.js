@@ -7,9 +7,22 @@ exports.command = new Command(
     "Query a Rule 34 image",
     "h <query>",
     (self, client, message, args) => {
+        if (!message.channel.nsfw) {
+            message
+                .delete()
+                .then((x) =>
+                    x.author.send(
+                        `You can only use the ${client.config.prefix}h command in NSFW channels!`
+                    )
+                );
+            return;
+        }
         Random.seed(Random.get(2147483647));
         apiRule34Xxx
-            .searchByText(args[0], Random.get(15))
+            .searchByText(
+                args.reduce((acc, cur) => acc + " " + cur, " "),
+                Random.get(15)
+            )
             .then((x) =>
                 apiRule34Xxx
                     .getPost(x[Math.floor(Random.get(1, true) * x.length)].id)

@@ -1,14 +1,31 @@
 const Command = require("../util/command").Command;
 const fs = require("fs");
 
+class Item {
+    constructor(name) {
+        this.name = name;
+    }
+}
+
 class Whale {
     constructor() {
         this.money = 500;
+        this.inventory = {};
+    }
+    addItem(itemName) {
+        this.inventory[itemName] = new Item(itemName);
     }
 }
 
 /** @type {Object} */
 var whales;
+
+function saveData() {
+    fs.writeFile("whales.json", JSON.stringify(whales), (err) =>
+        console.log(err)
+    );
+    console.log("SAVED WHALE DATA!!");
+}
 
 exports.command = new Command(
     "whale",
@@ -21,15 +38,26 @@ exports.command = new Command(
                 "Welcome! This is your first time running this command.\nYou have now created a Whale account!"
             );
             whales[id] = new Whale();
-            fs.writeFile("whales.json", JSON.stringify(whales), (err) =>
-                console.log(err)
-            );
+            whales[id].addItem("Money Pouch");
+            saveData();
         } else {
             /** @type {Whale} */
             let whale = whales[id];
             switch (args[0]) {
                 case "money":
                     message.reply(`you have $${whale.money}.`);
+                    break;
+                case "buy":
+                    message.reply(`Please select an item:
+\`\`\`1. Gacha Ticket - $100
+\`\`\``);
+                    break;
+                case "inventory":
+                    message.reply(`**Your Inventory**
+\`\`\`${Object.keys(whale.inventory)
+                        .map((x) => "- " + x)
+                        .toString()}
+\`\`\``);
                     break;
                 default:
                     message.reply(
@@ -56,7 +84,12 @@ ${client.config.prefix}whale money -> Display your money
             }
             fs.readFile("whales.json", function (err, data) {
                 whales = JSON.parse(data.toString());
-                console.log(whales);
+                // Object.keys(whales).forEach((x) => {
+                //     if (!whales[x].hasOwnProperty("inventory"))
+                //         whales[x].inventory = {};
+                // });
+                // saveData();
+                // console.log(whales);
             });
             //file exists
         });
